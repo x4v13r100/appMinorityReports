@@ -1,11 +1,11 @@
 import express from 'express';
 import {
     prueba,
-    // deleteReportes,
+    deleteReportes,
     // getReporte,
     getReportes,
-    createReportes
-    // updateReportes
+    createReportes,
+    updateReportes
 } from '../controllers/reporteController.js';
 
 
@@ -19,8 +19,8 @@ router.get('/prueba', prueba);
 router.get('/get', getReportes);
 // router.get('/get/:id', getReporte);
 router.post('/create', createReportes);
-// router.put('/update/:id', updateReportes);
-// router.delete('/delete/:id', deleteReportes);
+router.put('/update/:id', updateReportes);
+router.delete('/delete/:id', deleteReportes);
 
 
 export default router;

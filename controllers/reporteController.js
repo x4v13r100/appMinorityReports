@@ -41,9 +41,50 @@ const getReportes = async (req, res) => {
     }
 };
 
+const updateReportes = async (req, res) => {
+    const { id, nombreFinca, tipoError, descripcion, tecnico } = req.body; try {
+        const updateReporte = await Reporte.findById(id);
+        // console.log(updatePlato);
+        updateReporte.nombreFinca = nombreFinca;
+        updateReporte.tipoError = tipoError;
+        updateReporte.descripcion = descripcion;
+        updateReporte.tecnico = tecnico;
+        if (req.files.image) {
+            await deleteImage(updateReporte.image.public_id); const result = await uploadImage(req.files.image.tempFilePath); await fs.remove(req.files.image.tempFilePath);
+            updateReporte.image = {
+                url: result.secure_url,
+                public_id: result.public_id,
+            };
+            await updateReporte.save();
+            return res.status(204).json(updatePlato);
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+const deleteReportes = async (req, res) => {
+    try {
+        const reportRemoved = await Reporte.findByIdAndDelete(req.params.id); if (!reportRemoved) {
+            const error = new Error("Token no valido");
+            return res.sendStatus(404);
+        } else {
+            if (reportRemoved.image.public_id) {
+                await deleteImage(reportRemoved.image.public_id);
+            }
+            return res.sendStatus(204);
+        }
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 export {
     prueba,
     createReportes,
-    getReportes
+    getReportes,
+    updateReportes,
+    deleteReportes,
 };
