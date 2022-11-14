@@ -1,4 +1,4 @@
-import Producto from '../models/Reporte.js';
+import Reporte from '../models/Reporte.js';
 import fs from 'fs-extra';
 import {
     uploadImage,
@@ -21,9 +21,9 @@ const createReportes = async (req, res) => {
             };
             console.log(result);
         }
-        const Newproducto = new Producto({ nombreFinca, tipoError, descripcion, tecnico, image, });
-        await Newproducto.save();
-        return res.json(Newproducto);
+        const Newreporte = new Reporte({ nombreFinca, tipoError, descripcion, tecnico, image, });
+        await Newreporte.save();
+        return res.json(Newreporte);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ msg: error.message });
@@ -31,8 +31,19 @@ const createReportes = async (req, res) => {
 };
 
 
+const getReportes = async (req, res) => {
+    try {
+        const reportes = await Reporte.find();
+        res.send(reportes);
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 
 export {
     prueba,
     createReportes,
+    getReportes
 };
