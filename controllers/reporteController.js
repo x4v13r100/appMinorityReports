@@ -79,6 +79,17 @@ const deleteReportes = async (req, res) => {
     }
 };
 
+const getReporte = async (req, res) => {
+    try {
+        const OneReport = await Reporte.findById(req.params.id); if (!OneReport) {
+            return res.sendStatus(404);
+        } else {
+            return res.json(OneReport);
+        }
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
 
 export {
@@ -87,4 +98,5 @@ export {
     getReportes,
     updateReportes,
     deleteReportes,
+    getReporte
 };
