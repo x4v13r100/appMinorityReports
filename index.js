@@ -5,6 +5,7 @@ import fileupload from 'express-fileupload';
 import conectarDB from './config/db.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import reporteRoutes from './routes/reporteRoutes.js';
+import cierreRoutes from './routes/cierreRoutes.js';
 
 const PORT = process.env.PORT || 4000;
 dotenv.config();
@@ -39,6 +40,7 @@ app.use(cors(corsOptions));
 // Rutas----------------------------------------------------------------
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/reportes', reporteRoutes);
+app.use('/api/cierres', cierreRoutes);
 
 
 app.listen(PORT, () => {
